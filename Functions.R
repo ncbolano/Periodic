@@ -1,5 +1,5 @@
 # Initial Functions
-
+library(MASS)
 ## Calculates c_hat(k1,k2) =  (1/(2M+1))* sum_s(J_(k1+s)J*_(k2+s))
 c_hatM = function(J,k1,k2,M){
   s = seq(-M,M)
