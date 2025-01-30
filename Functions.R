@@ -1,12 +1,5 @@
 # Initial Functions
 
-#/
-#  var_sim
-#R
-#54 of 54
-library(MASS)
-
-########################################  Functions for the code ######################################
 ## Calculates c_hat(k1,k2) =  (1/(2M+1))* sum_s(J_(k1+s)J*_(k2+s))
 c_hatM = function(J,k1,k2,M){
   s = seq(-M,M)
@@ -35,8 +28,7 @@ Yhat = function(J,k,l1,l2,M){
   return(Y)
 }
 
-
-## Calsulates S_1M and S_2M
+## Calculates S_1M and S_2M
 ## Inputs:
 ##        J = fft
 ##        k = leading freq
@@ -67,23 +59,9 @@ S_var_c_estP = function(J,k,l,L,M,nP){
   O1 = outer(s,s,"-")
   O2 = outer(s,s,"+")+(2*k+l)
   
-  I1 <- `dim<-`(O1 %in% RL, dim(O1)) #I1[s1,s2]=TRUE is |s_1 - s_2| <= L 
-  I2 <- `dim<-`(O2 %in% RL, dim(O2)) #I2[s1,s2]=TRUE if |s_1 + s+2 + 2k +l|_nP <=L
+  I1 = `dim<-`(O1 %in% RL, dim(O1)) #I1[s1,s2]=TRUE is |s_1 - s_2| <= L 
+  I2 = `dim<-`(O2 %in% RL, dim(O2)) #I2[s1,s2]=TRUE if |s_1 + s+2 + 2k +l|_nP <=L
   
-  
-  # for(i in 1:nrow(Tmat))
-  # {
-  #   for(j in 1:ncol(Tmat))
-  #   {
-  #     if(mmod(s[i]-s[j],nP) < L)
-  #       That1 = That1+Tmat[i,j]
-  #     if(mmod(s[i]+s[j]+(2*k+l),nP) < L)
-  #       That2 = That2 + Tmat[i,j]
-  #   }
-  # }
-  
-  # That1 = That1/((2*M+1)^2)
-  # That2 = That2/((2*M+1)^2)
   
   That1 = sum(I1*Tmat)/((2*M+1)^2) #S_1,M
   
@@ -97,9 +75,7 @@ T_var_c_conj_estP = function(J,k,l,L,M,nP){
   Y23 = Yhat(J,k,l,0,M)
   s = seq(-M,M)
   Tmat = outer(Y01, Conj(Y23),"*")
-  
-  #That1 = 0
-  #That2 = 0
+
   
   P = length(J)/nP
   
@@ -126,22 +102,6 @@ T_var_c_conj_estP = function(J,k,l,L,M,nP){
   I1 = (I1_1)|(I1_2)
   I2 = (I2_1)|(I2_2)
   
-  # for(i in 1:nrow(Tmat))
-  # {
-  #   for(j in 1:ncol(Tmat))
-  #   {
-  #     if(mmod(s[i]-s[j]-l,nP) < L)
-  #       That1 = That1+Tmat[i,j]
-  #     if((mmod(s[i]+s[j]+(2*k),nP) < L) && (mmod(s[i]+s[j]+(2*k+2*l),nP) < L))
-  #       That2 = That2 + Tmat[i,j]
-  #   }
-  # }
-  # 
-  
-  # Tmat = I1*Tmat + I2*Tmat
-  
-  # That1 = That1/((2*M+1)^2)
-  # That2 = That2/((2*M+1)^2)
   
   That1 = sum(I1*Tmat)/((2*M+1)^2) #T_1,M
   That2 = sum(I2*Tmat)/((2*M+1)^2) #T_2,M
