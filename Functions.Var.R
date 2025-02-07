@@ -204,10 +204,9 @@ var_im = rep(0,R)
 set.seed(9)
 
 
-for(r in 1:R)
-{
-  #xt = tvar2(beta0=0.07,beta1=300,omega=pi/3,n1=n)
-  #xt = ar2complex(lambda=0.8,omega=pi/3,n1=n)
+var = function(J,k1,k2,L,M,n) {
+  # Input is our time series of N length , M dimensional
+  
   xt = VARP(n/3)
   J = fft(xt)/sqrt(n)
   
@@ -223,11 +222,7 @@ for(r in 1:R)
   
   var_re[r] = Re((v[1]+v[2]+vc[1]+vc[2])/2)
   var_im[r] = Re((v[1]+v[2]-vc[1]-vc[2])/2)
-  
-  #var_re = Re((v[1]+vc[1])/2)
-  #var_im = Re((v[1]-vc[1])/2)
-  
-  
+
   
 }
 
